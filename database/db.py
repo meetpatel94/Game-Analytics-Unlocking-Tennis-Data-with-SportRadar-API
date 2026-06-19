@@ -1,10 +1,15 @@
 import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+load_dotenv()
 
 def get_engine():
-    return create_engine(
-        DATABASE_URL,
-        pool_pre_ping=True
-    )
+    db_url = os.getenv("DATABASE_URL")
+
+    if not db_url:
+        raise ValueError(
+            "DATABASE_URL not found. Check .env file."
+        )
+
+    return create_engine(db_url)
