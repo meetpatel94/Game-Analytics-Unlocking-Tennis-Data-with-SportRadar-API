@@ -1,55 +1,65 @@
-# 🎾 Game Analytics: Unlocking Tennis Data with SportRadar API
+# 🎾 Game Analytics: Unlocking Tennis Data with Sportradar API
 
 ## 📌 Project Overview
 
-Game Analytics is a Streamlit-based data analytics application that explores and visualizes professional tennis data collected from the SportRadar API.
+Game Analytics is a comprehensive Tennis Analytics Dashboard built using Python, MySQL, and Streamlit. The application collects tennis competition, venue, complex, competitor, and ranking data from the Sportradar Tennis API and provides interactive visualizations, analytics, and insights through a modern web interface.
 
-The application provides interactive dashboards for analyzing:
-
-* Competitions
-* Categories
-* Complexes
-* Venues
-* Competitors
-* Doubles Rankings
-
-The project transforms raw API data into structured datasets and presents meaningful insights through modern visualizations and filters.
+The project enables users to explore competition structures, analyze player rankings, investigate venues and complexes, and gain meaningful insights from tennis tournament data.
 
 ---
 
 ## 🚀 Features
 
-### 🏆 Competition Analysis
+### 📊 Interactive Dashboard
 
-* Explore tennis competitions and categories
-* Analyze competition types and structures
-* View parent and sub-competitions
+* Total Competitions
+* Total Categories
+* Total Venues
+* Total Complexes
+* Total Competitors
+* Ranking Statistics
+* Country-wise Analysis
+* Competition Distribution Analysis
 
-### 🏟️ Complexes & Venues Explorer
+### 🏆 Competition Analytics
 
-* Browse sports complexes and venues
-* Analyze venue distribution by country
-* View timezone and location information
+* Competition Overview
+* Competition Type Analysis
+* Gender-wise Distribution
+* Parent-Child Competition Hierarchy
+* Category-based Filtering
 
-### 👥 Competitor Analytics
+### 🎾 Competitor Rankings
 
-* Search competitors by name
-* Country-wise competitor analysis
-* Ranking and points insights
+* Top Ranked Players
+* Ranking Movement Analysis
+* Points Distribution
+* Country-wise Competitor Analysis
+* Search Competitors
 
-### 📈 Rankings Dashboard
+### 🏟️ Venues & Complexes
 
-* Top-ranked competitors
-* Highest scoring competitors
-* Rank movement analysis
-* Competition participation statistics
+* Venue Information Explorer
+* Complex Details Viewer
+* Country-wise Venue Distribution
+* Timezone Analysis
+* Complex-Venue Relationships
 
-### 🎨 Interactive Dashboard
+### 🔍 Advanced Filtering
 
-* Dynamic filters
-* KPI cards
-* Charts and visualizations
-* Responsive user interface
+* Filter by Category
+* Filter by Competition Type
+* Filter by Country
+* Search Competitors
+* Ranking Range Selection
+
+### 📈 Data Visualization
+
+* Interactive Charts
+* KPI Cards
+* Trend Analysis
+* Distribution Graphs
+* Comparative Analytics
 
 ---
 
@@ -58,28 +68,27 @@ The project transforms raw API data into structured datasets and presents meanin
 ### Frontend
 
 * Streamlit
+* HTML
+* CSS
+* Plotly
+* Altair
 
 ### Backend
 
 * Python
+
+### Database
+
+* MySQL
 
 ### Data Processing
 
 * Pandas
 * NumPy
 
-### Visualization
-
-* Plotly
-* Altair
-
 ### API Integration
 
-* SportRadar Tennis API
-
-### Database
-
-* MySQL (Optional)
+* Sportradar Tennis API
 
 ---
 
@@ -91,22 +100,122 @@ Game-Analytics/
 ├── app.py
 ├── requirements.txt
 ├── README.md
-├── .gitignore
-│
-├── data/
-│   ├── category_details.json
-│   ├── competition_details.json
-│   ├── complexes_details.json
-│   ├── venues_details.json
-│   ├── competitors_details.json
-│   └── competitor_rankings_details.json
-│
-├── components/
+├── .env
 │
 ├── assets/
+│   ├── images/
+│   
 │
-└── sql_queries.sql
+├── data/
+│   ├── competitions.json
+│   ├── complexes.json
+│   └── double_competitors_rankings.json
+│
+├── database/
+│   ├── db_connection.py
+│   ├── schema.sql
+│   └── queries.py
+│
+├── api/
+│   ├── competitions.py
+│   ├── complexes.py
+│   └── rankings.py
+│
+├── streamlit_app
+│   ├── dashboard.py
+│   ├── competitions.py
+│   ├── venues.py
+│   ├── rankings.py
+│   └── compititions.py
+│
+└── test_query.py
 ```
+
+---
+
+## 🗄️ Database Schema
+
+### Categories Table
+
+| Column        | Type         |
+| ------------- | ------------ |
+| category_id   | VARCHAR(50)  |
+| category_name | VARCHAR(100) |
+
+### Competitions Table
+
+| Column           | Type         |
+| ---------------- | ------------ |
+| competition_id   | VARCHAR(50)  |
+| competition_name | VARCHAR(100) |
+| parent_id        | VARCHAR(50)  |
+| type             | VARCHAR(20)  |
+| gender           | VARCHAR(10)  |
+| category_id      | VARCHAR(50)  |
+
+### Complexes Table
+
+| Column       | Type         |
+| ------------ | ------------ |
+| complex_id   | VARCHAR(50)  |
+| complex_name | VARCHAR(100) |
+
+### Venues Table
+
+| Column       | Type         |
+| ------------ | ------------ |
+| venue_id     | VARCHAR(50)  |
+| venue_name   | VARCHAR(100) |
+| city_name    | VARCHAR(100) |
+| country_name | VARCHAR(100) |
+| country_code | CHAR(3)      |
+| timezone     | VARCHAR(100) |
+| complex_id   | VARCHAR(50)  |
+
+### Competitors Table
+
+| Column        | Type         |
+| ------------- | ------------ |
+| competitor_id | VARCHAR(50)  |
+| name          | VARCHAR(100) |
+| country       | VARCHAR(100) |
+| country_code  | CHAR(3)      |
+| abbreviation  | VARCHAR(10)  |
+
+### Competitor Rankings Table
+
+| Column              | Type        |
+| ------------------- | ----------- |
+| rank_id             | INT         |
+| rank                | INT         |
+| movement            | INT         |
+| points              | INT         |
+| competitions_played | INT         |
+| competitor_id       | VARCHAR(50) |
+
+---
+
+## 🔗 API Endpoints Used
+
+### Competitions API
+
+```bash
+https://api.sportradar.com/tennis/{access_level}/v3/{language_code}/competitions.{format}
+```
+
+### Complexes API
+
+```bash
+https://api.sportradar.com/tennis/{access_level}/v3/{language_code}/complexes.{format}
+```
+
+### Doubles Competitor Rankings API
+
+```bash
+https://api.sportradar.com/tennis/{access_level}/v3/{language_code}/double_competitors_rankings.{format}
+```
+
+These endpoints are specified in the project requirements.
 
 ---
 
@@ -115,8 +224,9 @@ Game-Analytics/
 ### Clone Repository
 
 ```bash
-git clone https://github.com/your-username/Game-Analytics.git
-cd Game-Analytics
+git clone https://github.com/meetpatel94/Game-Analytics-Unlocking-Tennis-Data-with-Sportradar-API.git
+
+cd Game-Analytics-Unlocking-Tennis-Data-with-Sportradar-API
 ```
 
 ### Create Virtual Environment
@@ -127,10 +237,16 @@ python -m venv venv
 
 ### Activate Environment
 
-Windows:
+Windows
 
 ```bash
 venv\Scripts\activate
+```
+
+Linux/Mac
+
+```bash
+source venv/bin/activate
 ```
 
 ### Install Dependencies
@@ -139,62 +255,96 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Run Application
+---
+
+
+## ▶️ Run Application
 
 ```bash
 streamlit run app.py
 ```
 
----
+Application URL
 
-## 📊 Data Sources
-
-The project uses data extracted from the SportRadar Tennis API.
-
-Data Collections:
-
-* Competitions
-* Categories
-* Complexes
-* Venues
-* Competitors
-* Doubles Competitor Rankings
+```text
+http://localhost:8501
+```
 
 ---
 
-## 📸 Dashboard Highlights
+## 📈 Sample Insights
 
-* Competition Distribution Analysis
-* Venue Analytics
-* Country-wise Competitor Insights
-* Rankings Explorer
-* Interactive Filtering System
-* KPI Overview Cards
+* Competition Distribution by Category
+* Country-wise Venue Analysis
+* Ranking Points Distribution
+* Top Ranked Competitors
+* Parent Competition Structure
+* Venue Timezone Analytics
+* Competition Type Analysis
 
 ---
 
-## 📈 Business Use Cases
+## 🎯 Business Use Cases
 
 * Event Exploration
-* Tournament Analysis
-* Performance Insights
-* Competition Tracking
+* Competition Hierarchy Analysis
+* Player Ranking Monitoring
 * Sports Data Visualization
-* Decision Support for Event Organizers
+* Venue & Infrastructure Analysis
+* Decision Support for Organizers
+* Tennis Data Research
+
+These use cases are derived from the project statement.
+
+---
+
+## 🔒 Error Handling
+
+* API Rate Limit Handling
+* Missing Data Validation
+* Database Exception Handling
+* User Input Validation
+* Streamlit Session State Management
+
+---
+
+## 📚 Skills Demonstrated
+
+* API Integration
+* JSON Processing
+* Database Design
+* SQL Query Optimization
+* Data Analytics
+* Data Visualization
+* Streamlit Development
+* Dashboard Design
+* Python Programming
 
 ---
 
 ## 👨‍💻 Author
 
-**Meet Patel**
+### Meet Patel
 
+B.E. Information Technology
 M.E. Artificial Intelligence & Data Science
-Gujarat Technological University (GTU)
 
-GitHub: https://github.com/meetpatel94
+GitHub:
+https://github.com/meetpatel94
+
+Portfolio:
+https://meetpatelportfolio.vercel.app
+
+Email:
+[meetpatel96645@gmail.com](mailto:meetpatel96645@gmail.com)
 
 ---
 
-## 📜 License
+## ⭐ Acknowledgements
 
-This project is developed for educational and analytical purposes.
+* Sportradar Tennis API
+* Streamlit
+* MySQL
+* Pandas
+* Plotly
+* Python Community

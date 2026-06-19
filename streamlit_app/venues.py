@@ -3,16 +3,6 @@ import pandas as pd
 import plotly.express as px
 from queries.query import run_query
 
-# =============================CSS==============
-# ==============================================
-st.markdown("""
-    <style>
-    
-    </style>
-""", unsafe_allow_html=True)
-# =============================CSS=============
-# =============================================
-
 def show_venues():
 
     st.title("🏟 Venue Analytics")

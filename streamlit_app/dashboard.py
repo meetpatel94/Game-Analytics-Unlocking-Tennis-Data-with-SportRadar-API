@@ -3,17 +3,6 @@ import plotly.express as px
 
 from queries.query import run_query
 
-# =============================CSS==============
-# ==============================================
-st.markdown("""
-<style>
-    
-</style>
-""", unsafe_allow_html=True)
-# =============================CSS=============
-# =============================================
-
-
 def show_dashboard():
 
     st.title("🎾 Tennis Analytics Dashboard")
