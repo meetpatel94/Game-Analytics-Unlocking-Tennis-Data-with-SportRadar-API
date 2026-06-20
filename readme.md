@@ -2,7 +2,7 @@
 
 ## 📌 Project Overview
 
-Game Analytics is a comprehensive Tennis Analytics Dashboard built using Python, MySQL, and Streamlit. The application collects tennis competition, venue, complex, competitor, and ranking data from the Sportradar Tennis API and provides interactive visualizations, analytics, and insights through a modern web interface.
+Game Analytics is a comprehensive Tennis Analytics Dashboard built using Python, Neon PostgreSQL, and Streamlit. The application extracts tennis competition, venue, complex, competitor, and ranking data from the Sportradar Tennis API, stores structured data in Neon PostgreSQL, and provides interactive visualizations, analytics, and insights through a modern web interface.
 
 The project enables users to explore competition structures, analyze player rankings, investigate venues and complexes, and gain meaningful insights from tennis tournament data.
 
@@ -79,7 +79,7 @@ The project enables users to explore competition structures, analyze player rank
 
 ### Database
 
-* MySQL
+* Neon PostgreSQL
 
 ### Data Processing
 
@@ -104,7 +104,6 @@ Game-Analytics/
 │
 ├── assets/
 │   ├── images/
-│   
 │
 ├── data/
 │   ├── competitions.json
@@ -112,22 +111,24 @@ Game-Analytics/
 │   └── double_competitors_rankings.json
 │
 ├── database/
-│   ├── db_connection.py
-│   ├── schema.sql
-│   └── queries.py
+│   ├── db.py
+│   └── test_connection.py
 │
-├── api/
-│   ├── competitions.py
-│   ├── complexes.py
-│   └── rankings.py
+├── api_scripts/
+│   ├── fetch_competitions.py
+│   ├── fetch_complexes.py
+│   ├── fetch_rankings.py
+│   └── load_json_to_neon.py
 │
-├── streamlit_app
+├── streamlit_app/
 │   ├── dashboard.py
 │   ├── competitions.py
 │   ├── venues.py
 │   ├── rankings.py
 │   └── compititions.py
 │
+├── components/
+├── queries/
 └── test_query.py
 ```
 
@@ -200,22 +201,20 @@ Game-Analytics/
 ### Competitions API
 
 ```bash
-https://api.sportradar.com/tennis/{access_level}/v3/{language_code}/competitions.{format}
+https://api.sportradar.com/tennis/trial/v3/en/competitions.json
 ```
 
 ### Complexes API
 
 ```bash
-https://api.sportradar.com/tennis/{access_level}/v3/{language_code}/complexes.{format}
+https://api.sportradar.com/tennis/trial/v3/en/complexes.json
 ```
 
 ### Doubles Competitor Rankings API
 
 ```bash
-https://api.sportradar.com/tennis/{access_level}/v3/{language_code}/double_competitors_rankings.{format}
+https://api.sportradar.com/tennis/trial/v3/en/double_competitors_rankings.json
 ```
-
-These endpoints are specified in the project requirements.
 
 ---
 
@@ -257,7 +256,6 @@ pip install -r requirements.txt
 
 ---
 
-
 ## ▶️ Run Application
 
 ```bash
@@ -293,8 +291,6 @@ http://localhost:8501
 * Venue & Infrastructure Analysis
 * Decision Support for Organizers
 * Tennis Data Research
-
-These use cases are derived from the project statement.
 
 ---
 
@@ -344,7 +340,8 @@ Email:
 
 * Sportradar Tennis API
 * Streamlit
-* MySQL
+* Neon PostgreSQL
+* SQLAlchemy
 * Pandas
 * Plotly
 * Python Community
