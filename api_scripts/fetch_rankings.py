@@ -1,43 +1,111 @@
-import requests
+import os
 import json
+import requests
+from dotenv import load_dotenv
 
-API_KEY = "hlYJEW0gRYmeToyLcciJOIowLK3LQHtudQ4nkZEo"
+# Load environment variables
+load_dotenv()
 
+# Get API key from .env
+API_KEY = os.getenv("API_KEY")
+
+# Check API key
+if not API_KEY:
+    raise ValueError(
+        "❌ API_KEY not found in .env file"
+    )
+
+# Build URL
 url = (
     "https://api.sportradar.com/"
     "tennis/trial/v3/en/"
     "double_competitors_rankings.json"
-    f"?api_key=hlYJEW0gRYmeToyLcciJOIowLK3LQHtudQ4nkZEo"
+    f"?api_key={API_KEY}"
 )
 
-response = requests.get(
-    url,
-    timeout=30
-)
-
-print("Status:", response.status_code)
-
-if response.status_code == 200:
-
-    data = response.json()
-
-    with open(
-        "double_competitors_rankings.json",
-        "w",
-        encoding="utf-8"
-    ) as f:
-
-        json.dump(
-            data,
-            f,
-            indent=4,
-            ensure_ascii=False
-        )
-
-    print(
-        "✅ double_competitors_rankings.json saved"
+try:
+    # Send request
+    response = requests.get(
+        url,
+        timeout=30
     )
 
-else:
+    print(
+        f"Status Code: {response.status_code}"
+    )
 
-    print(response.text)
+    # Success
+    if response.status_code == 200:
+
+        data = response.json()
+
+        # Create data folder
+        os.makedirs(
+            "data",
+            exist_ok=True
+        )
+
+        # Save JSON
+        file_path = os.path.join(
+            "data",
+            "double_competitors_rankings.json"
+        )
+
+        with open(
+            file_path,
+            "w",
+            encoding="utf-8"
+        ) as file:
+
+            json.dump(
+                data,
+                file,
+                indent=4,
+                ensure_ascii=False
+            )
+
+        print(
+            f"✅ Data saved successfully: {file_path}"
+        )
+
+        # Optional statistics
+        rankings = data.get(
+            "rankings",
+            []
+        )
+
+        print(
+            f"📊 Total Ranking Records: {len(rankings)}"
+        )
+
+    else:
+
+        print(
+            f"❌ API Error: {response.status_code}"
+        )
+
+        print(response.text)
+
+except requests.exceptions.Timeout:
+
+    print(
+        "❌ Request timed out."
+    )
+
+except requests.exceptions.ConnectionError:
+
+    print(
+        "❌ Connection error."
+    )
+
+except requests.exceptions.RequestException as e:
+
+    print(
+        f"❌ Request failed: {e}"
+    )
+
+except Exception as e:
+
+    print(
+        f"❌ Unexpected error: {e}"
+    )

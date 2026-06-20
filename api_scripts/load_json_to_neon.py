@@ -1,12 +1,21 @@
+import os
 import json
 from pathlib import Path
 from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
 
 # =====================================================
 # NEON DATABASE URL
 # =====================================================
 
-DATABASE_URL = "postgresql://neondb_owner:npg_yxbpQX3PlhR0@ep-lively-paper-aosyjw04-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise ValueError(
+        "❌ DATABASE_URL not found in .env file"
+    )
 
 engine = create_engine(
     DATABASE_URL,
